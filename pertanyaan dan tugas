@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulir Biodata dan Perhitungan Gaji</title>
+</head>
+<body>
+    <h2>Formulir Biodata</h2>
+    <form method="POST" action="">
+        Nama: <input type="text" name="nama"><br>
+        Tanggal Lahir: <input type="date" name="tgl_lahir"><br>
+        Pekerjaan:
+        <select name="pekerjaan">
+            <option value="programmer">Programmer</option>
+            <option value="desainer">Desainer</option>
+            <option value="marketing">Marketing</option>
+        </select><br>
+        <input type="submit" value="Kirim">
+    </form>
+
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $nama = $_POST['nama'];
+        $tgl_lahir = $_POST['tgl_lahir'];
+        $pekerjaan = $_POST['pekerjaan'];
+
+        $umur = date_diff(date_create($tgl_lahir), date_create('now'))->y;
+
+        switch ($pekerjaan) {
+            case 'programmer':
+                $gaji = 10000000;
+                break;
+            case 'desainer':
+                $gaji = 8000000;
+                break;
+            case 'marketing':
+                $gaji = 7000000;
+                break;
+            default:
+                $gaji = 0;
+        }
+
+        echo "<h2>Hasil</h2>";
+        echo "Nama: " . $nama . "<br>";
+        echo "Umur: " . $umur . " tahun<br>";
+        echo "Pekerjaan: " . $pekerjaan . "<br>";
+        echo "Gaji: Rp " . number_format($gaji, 0, ',', '.') . "/bulan";
+    }
+    ?>
+</body>
+</html>
